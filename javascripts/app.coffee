@@ -3,18 +3,22 @@ App = class App
     $(window).keyup @keyPress
     $('section:first-child').show().addClass 'active'
     @playing = no
+    @seconds = 0
 
   keyPress : (event)=>
-    if @playing
-      @playing = no
-    else 
+    unless @playing
       @playing = yes
+      @timer()
       @loop()
 
+  timer: =>
+    $('#timer').html @seconds
+    @seconds += 1
+    setTimeout @timer, 1000 
+
   loop: =>
-    if @playing
-      @nextSlide()
-      setTimeout @loop, 20000 
+    @nextSlide()
+    setTimeout @loop, 20000 
 
   nextSlide: =>
     next = $('.active').next('section')

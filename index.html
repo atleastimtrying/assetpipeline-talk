@@ -7,6 +7,7 @@
     <script src="javascripts/app.js"></script>
   </head>
   <body>
+    <div id='timer'>0</div>
     <section class='active'>
       <h2>Coffeescript in the Asset Pipeline</h2>
       <img src='images/pipe.png'>
@@ -25,12 +26,11 @@
     <section>
       <h2>Example : application.coffee</h2>
       <pre>
-<blockquote>
-  #= require jquery
-  #= require jquery_ujs
-  #= require folder_name
-  #= require single_file
-  #= require_tree
+<blockquote>#= require jquery
+#= require jquery_ujs
+#= require folder_name
+#= require single_file
+#= require_tree
 </blockquote>
       </pre>
     </section>
@@ -56,18 +56,15 @@
     <section>
       <h2>Conditional Example</h2>
       <pre>
-<blockquote>
-<%= javascript_include_tag "application" %>
+<blockquote><%= javascript_include_tag "application" %>
 <%= javascript_include_tag "admin" if @admin %>
 </blockquote>
-<blockquote>
-#admin.coffee
+<blockquote>#admin.coffee
 #= require jquery
 #= require jquery_ujs
 #= require admin_files
 </blockquote>
-<blockquote>
-#admin_files/index.coffee
+<blockquote>#admin_files/index.coffee
 #= require_tree
 </blockquote>
       </pre>
@@ -86,8 +83,7 @@
     <section>
       <h2>A Simple CS Class</h2>
       <pre>
-<blockquote>
-class window.Player
+<blockquote>class window.IPRUG.Player
   constructor: (@events)->
     $(@events).on 'play', @play
   play: ->
@@ -108,13 +104,22 @@ class window.Player
     <section>
       <h2>Example</h2>
       <pre>
-<blockquote>
-class window.App
+<blockquote>class window.IPRUG.App
   constructor: ->
-    @player = new Player @ if $ '#audio'
-    @sockets = new Sockets @ if Modernizr.websockets
+    @player = new IPRUG.Player @ if $ '#audio'
+    @sockets = new IPRUG.Sockets @ if Modernizr.websockets
 </blockquote>
       </pre>
+    </section>
+    
+    <section>
+      <h2>Namespacing</h2>
+      <ul>
+        <li>Declare your namespace first</li>
+        <li>Attach it to window</li>
+        <li>Make it unique</li>
+        <li>Assign all your CS classes to it</li>
+      </ul>
     </section>
     
     <section>
@@ -124,6 +129,7 @@ class window.App
         <li>Easier to debug</li>
         <li>Allows seperation of interests</li>
         <li>Handy if using flash etc.</li>
+        <li>Great for progressive enhancement.</li>
       </ul>
     </section>
 
