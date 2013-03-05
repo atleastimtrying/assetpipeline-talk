@@ -1,0 +1,145 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Coffeescript Asset Pipeline Talk</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src='javascripts/jquery.js'></script>
+    <script src="javascripts/app.js"></script>
+  </head>
+  <body>
+    <section class='active'>
+      <h2>Coffeescript in the Asset Pipeline</h2>
+      <img src='images/pipe.png'>
+    </section>
+
+    <section>
+      <h2>What is the Asset Pipeline?</h2>
+      <ul>
+        <li>Part of the rails stack</li>
+        <li>Precompiles your coffeescript/sass/haml</li>
+        <li>Combines your coffeescript into one file</li>
+        <li>Can be manipulated.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Example : application.coffee</h2>
+      <pre>
+<blockquote>
+  #= require jquery
+  #= require jquery_ujs
+  #= require folder_name
+  #= require single_file
+  #= require_tree
+</blockquote>
+      </pre>
+    </section>
+
+    <section>
+      <h2>Conditional file includes</h2>
+      <ul>
+        <li>sometimes you don't want all the JS</li>
+        <li>not just about file size</li>
+        <li>Conflicting interests/unused code</li>
+        <li>e.g. Admin areas</li>
+      </ul>
+    </section>
+    <section>
+      <h2>How to do it</h2>
+      <ul>
+        <li>two config files referring to a folder</li>
+        <li>Conditionals in the header</li>
+        <li>Creates two seperate file trees to be parsed.</li>
+        <li>index.coffee gets inspected within a folder</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Conditional Example</h2>
+      <pre>
+<blockquote>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "admin" if @admin %>
+</blockquote>
+<blockquote>
+#admin.coffee
+#= require jquery
+#= require jquery_ujs
+#= require admin_files
+</blockquote>
+<blockquote>
+#admin_files/index.coffee
+#= require_tree
+</blockquote>
+      </pre>
+    </section>
+    
+    <section>
+      <h2>Coffeescript Classes</h2>
+      <ul>
+        <li>Coffeescript classes</li>
+        <li>Very modular</li>
+        <li>Can be independent using events</li>
+        <li>Handy way to seperate concerns in JS</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>A Simple CS Class</h2>
+      <pre>
+<blockquote>
+class window.Player
+  constructor: (@events)->
+    $(@events).on 'play', @play
+  play: ->
+    $('#audio')[0].play()
+</blockquote>
+      </pre>
+    </section>
+    
+    <section>
+      <h2>Feature Detection</h2>
+      <ul>
+        <li>Only instantiate Classes relavent to the page</li>
+        <li>Detect features or dom elements</li>
+        <li>Keeps minimal code running</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Example</h2>
+      <pre>
+<blockquote>
+class window.App
+  constructor: ->
+    @player = new Player @ if $ '#audio'
+    @sockets = new Sockets @ if Modernizr.websockets
+</blockquote>
+      </pre>
+    </section>
+    
+    <section>
+      <h2>Advantages</h2>
+      <ul>
+        <li>Minimal amounts of code on a page</li>
+        <li>Easier to debug</li>
+        <li>Allows seperation of interests</li>
+        <li>Handy if using flash etc.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Disadvantages</h2>
+      <ul>
+        <li>Russian Dolls</li>
+        <li>Potentially another http request</li>
+        <li>Need distinct CS Classes</li>
+        <li>Dependent on DOM structure for JS includes</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Questions?</h2>
+      <img src='images/gordon.jpg'>
+    </section>
+  </body>
+</html>
